@@ -6,7 +6,98 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <script>
+      window.transliterate = function(text) {
+        text = text.toLowerCase()
+        var space = '-';
+        var transl = {
+          'а': 'a',
+          'б': 'b',
+          'в': 'v',
+          'г': 'g',
+          'д': 'd',
+          'е': 'e',
+          'ё': 'e',
+          'ж': 'zh',
+          'з': 'z',
+          'и': 'i',
+          'й': 'j',
+          'к': 'k',
+          'л': 'l',
+          'м': 'm',
+          'н': 'n',
+          'о': 'o',
+          'п': 'p',
+          'р': 'r',
+          'с': 's',
+          'т': 't',
+          'у': 'u',
+          'ф': 'f',
+          'х': 'h',
+          'ц': 'c',
+          'ч': 'ch',
+          'ш': 'sh',
+          'щ': 'sh',
+          'ъ': space,
+          'ы': 'y',
+          'ь': space,
+          'э': 'e',
+          'ю': 'yu',
+          'я': 'ya',
+          ' ': space,
+          '_': space,
+          '`': space,
+          '~': space,
+          '!': space,
+          '@': space,
+          '#': space,
+          '$': space,
+          '%': space,
+          '^': space,
+          '&': space,
+          '*': space,
+          '(': space,
+          ')': space,
+          '-': space,
+          '\=': space,
+          '+': space,
+          '[': space,
+          ']': space,
+          '\\': space,
+          '|': space,
+          '/': space,
+          '.': space,
+          ',': space,
+          '{': space,
+          '}': space,
+          '\'': space,
+          '"': space,
+          ';': space,
+          ':': space,
+          '?': space,
+          '<': space,
+          '>': space,
+          '№': space
+        }
 
+        var result = '';
+        var curent_sim = '';
+
+        for (var i = 0; i < text.length; i++) {
+          if (transl[text[i]] != undefined) {
+            if (curent_sim != transl[text[i]] || curent_sim != space) {
+              result += transl[text[i]];
+              curent_sim = transl[text[i]];
+            }
+          }
+          else {
+            result += text[i];
+            curent_sim = text[i];
+          }
+        }
+        return result
+      }
+    </script>
     <link href='https://fonts.googleapis.com/css?family=Vast+Shadow' rel='stylesheet' type='text/css'>
     <script src="https://maps.google.com/maps/api/js"></script>
     <script src="//cdn.ckeditor.com/4.7.1/full/ckeditor.js"></script>

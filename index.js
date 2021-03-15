@@ -13,6 +13,7 @@ const Q = require('q');
 const nunjucks = require('nunjucks');
 const util = require('./src/util/util');
 const log = require('debug')('formio:log');
+const exec = require('child_process').exec;
 
 const originalGetToken = util.Formio.getToken;
 const originalEvalContext = util.Formio.Components.components.component.prototype.evalContext;
@@ -329,6 +330,40 @@ module.exports = function(config) {
           swagger(req, router, function(spec) {
             res.json(spec);
           });
+        });
+
+        router.post('/form/:formId/clone', function(req, res, next) {
+          const util = router.formio.util;
+          if (!req.formId) {
+            res.status(400).send('formId is null');
+            return;
+          }
+
+          const query = {_id: util.idToBson(req.formId), deleted: {$eq: null}};
+          router.formio.resources.form.model.findOne(query).exec()
+              .then((form) => {
+                if (!form) {
+                  res.status(400).send('form not found');
+                  return;
+                }
+
+                const newFormName = `${form.path}N${Math.random().toString(36).substring(24)}`;
+                exec(`formio copy form ${config.domain}/${form.path} ${config.domain}/${newFormName} --username ${config.user} --password ${config.password}`, (error, stdout, stderr) => {
+                  console.log('stdout:', stdout);
+                  console.log('stderr:', stderr);
+                  if (error !== null) {
+                    console.log(`exec error: ${error}`);
+                    res.status(400).send(`exec error: ${error}`);
+                    return;
+                  }
+                  router.formio.resources.form.model.findOne({path: newFormName, deleted: {$eq: null}}).exec()
+                      .then((newFrom) => {
+                        newFrom.properties = {parentId: req.formId, parentPath: form.path};
+                        newFrom.save();
+                      });
+                  res.status(200).send(newFormName);
+                });
+              });
         });
 
         require('./src/middleware/recaptcha')(router);

@@ -9,6 +9,8 @@
   "mongo": "mongodb://localhost:27017/formioapp",
   "mongoConfig": "",
   "mongoCA": "",
+  "user": "",
+  "password": "",
   "mongoSecret": "--- change me now ---",
   "reservedForms": [
     "submission",
