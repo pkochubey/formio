@@ -20,6 +20,8 @@ RUN apk --update add git
 # Use https to avoid requiring ssh keys for public repos.
 RUN git config --global url."https://github.com/".insteadOf "ssh://git@github.com/"
 
+RUN npm install --global --unsafe-perm exp formio-cli
+
 # Using an alternative package install location
 # to allow overwriting the /app folder at runtime
 # stackoverflow.com/a/13021677
@@ -34,7 +36,6 @@ COPY ./package-lock.json $NPM_PACKAGES/
 
 # Use "Continuous Integration" to install as-is from package-lock.json
 RUN npm ci --prefix=$NPM_PACKAGES
-RUN npm install -g formio-cli
 
 RUN apk del git
 
