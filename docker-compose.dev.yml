@@ -1,9 +1,18 @@
 version: '3.7'
 services:
-  formio:
-    container_name: formio_builder
+  mongo:
     networks:
       - shared
+    image: mongo:4.1
+    restart: always
+    volumes:
+      - mdb-data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME:
+      MONGO_INITDB_ROOT_PASSWORD:
+
+  formio:
+    container_name: formio_builder
     build: ./
     restart: always
     volumes:
@@ -15,6 +24,5 @@ services:
     stdin_open: true  # -i
     tty: true         # -t
 
-networks:
-  shared:
-    external: true
+volumes:
+  mdb-data:
