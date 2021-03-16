@@ -347,7 +347,7 @@ module.exports = function(config) {
                   return;
                 }
 
-                const newFormName = `${form.path}N${Math.random().toString(36).substring(24)}`;
+                const newFormName = `${form.path}N${Math.random().toString(36).substring(2)}`;
                 exec(`formio copy form ${config.domain}/${form.path} ${config.domain}/${newFormName} --username ${config.user} --password ${config.password}`, (error, stdout, stderr) => {
                   console.log('stdout:', stdout);
                   console.log('stderr:', stderr);
