@@ -30,10 +30,26 @@
       '    <label for="name" class="control-label">Name</label>\n' +
       '    <input type="text" ng-model="form.name" class="form-control" id="name" placeholder="Enter the form machine name"/>\n' +
       '  </div>\n' +
-      '  <div id="form-group-path" class="form-group">\n' +
-      '    <label for="path" class="control-label">Path</label>\n' +
-      '    <input type="text" class="form-control" id="path" ng-model="form.path" placeholder="example" style="text-transform: lowercase">\n' +
-      '    <small>The path alias for this form.</small>\n' +
+      '  <div class="row">\n' +
+      '  <div class="col col-sm-4">\n' +
+      '    <div id="form-group-path" class="form-group">\n' +
+      '      <label for="path" class="control-label">Path</label>\n' +
+      '      <input type="text" class="form-control" id="path" ng-model="form.path" placeholder="example" style="text-transform: lowercase">\n' +
+      '      <small>The path alias for this form.</small>\n' +
+      '    </div>\n' +
+      '  </div>\n' +
+      '  <div class="col col-sm-4">\n' +
+      '    <div id="form-group-display" class="form-group">\n' +
+      '      <label for="display" class="control-label">Display as</label>\n' +
+      '      <select class="form-control" id="display" ng-options="display.name as display.title for display in formDisplays" ng-model="form.display"></select>\n' +
+      '    </div>\n' +
+      '  </div>\n' +
+      '  <div class="col col-sm-4">\n' +
+      '    <div id="form-group-tags" class="form-group">\n' +
+      '      <label for="tags" class="control-label">Tags</label>\n' +
+      '      <tags-input ng-model="tags" on-tag-added="updateFormTags()" on-tag-removed="updateFormTags()" id="tags"></tags-input>\n' +
+      '    </div>\n' +
+      '  </div>\n' +
       '  </div>\n' +
       '  <input type="hidden" ng-model="form.type"/>\n' +
       '  <div ng-include="\'formio-helper/formbuilder/settings.html\'"></div>\n' +
